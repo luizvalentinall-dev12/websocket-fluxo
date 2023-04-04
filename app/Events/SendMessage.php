@@ -16,17 +16,20 @@ class SendMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+//    public $user;
+//    public $test;
     public $message;
+
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Message $message
      */
-    public function __construct(User $user, Message $message)
+    public function __construct($message)
     {
         $this->message = $message;
-        $this->user = $user;
+//        $this->user = 2;
+//        $this->test = '963';
     }
 
     /**
@@ -36,6 +39,13 @@ class SendMessage implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('chat-channel');
+        return new Channel('chat-channel');
+    }
+
+    public function broadcastWith()
+    {
+        return  [
+            'mensagem' => $this->message ,
+        ];
     }
 }
